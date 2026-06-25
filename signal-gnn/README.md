@@ -4,23 +4,6 @@ A graph neural network that learns to predict the downstream molecular/cytokine
 output of an immune signaling network, given which upstream receptors are
 simultaneously activated.
 
-## Motivation
-
-This project is a small-scale technical analog of the core ML problem
-described by ImmuNet: predicting the molecular output of simultaneous immune
-receptor activations, in order to reduce the need for extensive early-stage
-experimental screening in drug development.
-
-Rather than using a licensed real-world immunology dataset, this project
-builds a **synthetic but structurally realistic** immune signaling network
-(receptors → adaptors → kinases → transcription factors → cytokine/effector
-outputs, with both activating and inhibitory edges) and simulates signal
-propagation through it. This gives a fully self-contained, reproducible
-environment for training and evaluating a GNN on exactly the kind of problem
-ImmuNet is solving — predicting combinatorial downstream effects from
-upstream receptor co-activation — without requiring access to a proprietary
-or licensed dataset.
-
 ## Problem framing
 
 - **Input:** a binary pattern indicating which receptor(s) are simultaneously
@@ -31,7 +14,7 @@ or licensed dataset.
   immune signaling biology (e.g. TLR4 → MyD88 → IRAK → NF-kB → TNF-alpha).
 - **Output:** the predicted activation level (0–1) of every node in the
   network, with the cytokine/effector **output layer** being the
-  biologically meaningful target (analogous to ImmuNet's "molecular output").
+  biologically meaningful target.
 - **Model:** a 3-layer Graph Attention Network (GATv2), which passes messages
   along the fixed graph topology and learns how upstream activation patterns
   propagate to downstream nodes — including through inhibitory edges, which
@@ -126,16 +109,3 @@ cd ..
 python visualize.py
 ```
 
-## What I'd explore next (mapping toward ImmuNet's actual problem)
-
-- Swap the synthetic network for real curated pathway data (e.g. Reactome or
-  KEGG immune signaling pathways) once licensing/access allows.
-- Move from a fixed-topology graph to **inductive** graph learning, so the
-  model generalizes to receptor/pathway combinations not seen during
-  training, and potentially to entirely new network topologies.
-- Add a data-engineering layer to ingest and normalize real expression data
-  (e.g. from public immunology datasets) into the same node-feature format
-  used here.
-- Extend the model to predict not just activation magnitude but also
-  *timing/dynamics* of the signaling cascade, since real immune responses are
-  temporal, not just steady-state.
