@@ -1,0 +1,10 @@
+{
+  "test_loss_mse_all_nodes": 0.00033913769099550944,
+  "test_mae_output_nodes": 0.01807008260562096,
+  "best_epoch": 52,
+  "best_val_loss": 0.0003411701909499243,
+  "num_samples": 1200,
+  "train_size": 840,
+  "val_size": 180,
+  "test_size": 180
+}
